@@ -1,6 +1,8 @@
 # CRUD模板网站
 
-> 一个基于Django + Vue.js 的培训项目
+> 培训用
+一个用Django + Vue.js开发的示范网站，采用前后端分离模式，前端服务器监听3000端口，后端服务器监听8000端口。
+所有异步请求都由前端服务器转发到本地的8000端口，数据经原路返回，由前端完成页面渲染。
 
 ## 下载项目代码
 
@@ -11,7 +13,7 @@ git clone git@github.com:Ray57468260/crud-example.git
 
 ## 安装Python环境
 ``` bash
-# python3.6 安装bz2依赖库
+# 安装bz2依赖库
 wget https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz
 tar -zxf  bzip2-1.0.6.tar.gz 
 cd bzip2-1.0.6  
@@ -23,11 +25,12 @@ make && make install
 # 安装virtualenv 沙盒环境包
 pip install virtualenv
 
-# 创建虚拟环境（进入项目根目录）
+# 创建虚拟环境
+# 进入项目根目录
 virtualenv env -p python3.6 # python3.6指向上面重新编译的版本，换成你的实际路径
 
 # 安装依赖
-pip install -r requirements.txt  -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.douban.com
+pip install -r requirements.txt  -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 ``` 
 
 ## 安装前端环境
@@ -55,7 +58,7 @@ CREATE DATABASE crud;
 CREATE TABLE `app_crudexample` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `field1` varchar(255) NOT NULL, `field2` varchar(255) NOT NULL, `field3` varchar(255) NOT NULL, `createTime` datetime(6) NOT NULL, `updateTime` datetime(6) NOT NULL);
 ``` 
 
-## 启动服务器
+## 启动服务
 ``` bash
 # 启动前端服务器，监听端口3000
 cd appfront/
