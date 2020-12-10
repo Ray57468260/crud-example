@@ -9,24 +9,22 @@
         <el-button @click="exportExcel">导出</el-button>
       </div>
 
-      <!-- 搜索区域 -->
-
-      <el-divider><i class="el-icon-search">条件搜索</i></el-divider>
-      <el-form :model="searchForm" :inline="true" label-width="auto" size="mini">
-        <el-form-item label="字段1">
-          <el-input size="mini" v-model="searchForm.field1" placeholder="精确搜索" style="width: 100%"></el-input>
-        </el-form-item>
-        <el-form-item label="字段2">
-          <el-input size="mini" v-model="searchForm.field2" placeholder="多条模糊搜索, 逗号分隔" style="width: 100%"></el-input>
-        </el-form-item>
-        <el-form-item label="字段3">
-          <el-input size="mini" v-model="searchForm.field3" placeholder="模糊搜索" style="width: 100%"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="pageLoad" size="mini">搜索</el-button>
-        </el-form-item>
-      </el-form>
-      <br>
+      <!-- 条件搜索 -->
+      <el-divider><i class="el-icon-search" @click="isSearch=!isSearch" style="cursor: pointer;">条件搜索</i></el-divider>
+      <div v-if="isSearch">
+        <el-form :inline="true" size="mini" ref="form" :model="searchForm" label-width="auto">
+          <el-form-item label="字段1">
+            <el-input v-model="searchForm.field1" size="mini" placeholder="精确搜索"></el-input>
+          </el-form-item>
+          <el-form-item label="字段2">
+            <el-input v-model="searchForm.field2" size="mini" placeholder="多条模糊搜索, 逗号分隔"></el-input>
+          </el-form-item>
+          <el-form-item label="字段3">
+            <el-input v-model="searchForm.field3" size="mini" placeholder="模糊搜索"></el-input>
+          </el-form-item>
+          <el-button size="mini" type="primary" @click="pageLoad">查询</el-button>
+        </el-form>
+      </div>
 
       <!-- 功能区域 -->
       <div style="display: flex">
@@ -139,6 +137,7 @@ export default {
         field2: '',
         field3: ''
       },
+      isSearch: true,
       searchForm: {
         field1: '',
         field2: '',
@@ -161,7 +160,6 @@ export default {
       this.pageLoad()
     },
     pageLoad () {
-      console.log('trigger')
       const that = this
       this.loading = true
       this.$axios.get('crud/', {

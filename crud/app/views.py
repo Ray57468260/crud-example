@@ -1,5 +1,6 @@
 import json
 import datetime
+import os
 import pandas as pd
 from django.views import View
 from app.models import CrudExample
@@ -8,7 +9,6 @@ from django.core.paginator import Paginator
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 
-# Create your views here.
 
 class ComplexEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -35,7 +35,8 @@ def cleanse_content(search_content):
 
 def obj2dict(obj):
     """对象转换成字典
-    auto_now 及 auto_now_add 在model_to_dict转换时会被忽略, 需要手动处理"""
+    auto_now 及 auto_now_add 在model_to_dict转换时会被忽略, 需要手动处理
+    """
     temp = model_to_dict(obj)
     time_fields = [field.name for field in obj.__class__._meta.get_fields() if 'auto_now' in field.__dict__ or 'auto_now_add' in field.__dict__]
     for one in time_fields:
@@ -103,6 +104,7 @@ class CrudView(View):
             response['Content-Disposition'] = "attachment;filename={}".format(filename)
             response['Access-Control-Expose-Headers'] = "FileName"
             response['FileName'] = json.dumps(filename)
+            os.remove(filename)
             return response
 
         # 下载模板

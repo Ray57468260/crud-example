@@ -4,8 +4,8 @@
 
     <!-- 顶栏容器 -->
     <el-header>
-      <el-menu :default-active="activeIndex" mode="horizontal">
-        <el-menu-item index="crud">CRUD</el-menu-item>
+      <el-menu :default-active="activeIndex" mode="horizontal" :router="true">
+        <el-menu-item index="/basic">基础模板</el-menu-item>
         <el-submenu index="workspace">
           <template slot="title">我的工作台</template>
           <el-menu-item index="2-1">选项1</el-menu-item>
@@ -18,10 +18,11 @@
     <el-container>
       <!-- 侧栏容器 -->
       <el-aside style="width: 18%;">
-        <h4>CRUD</h4>
+        <h4>基础模板</h4>
         <el-menu
-          default-active="func">
-          <el-menu-item index="func">
+          :router="true"
+          default-active="/basic">
+          <el-menu-item index="/basic">
             <template slot="title">
               <i class="el-icon-menu"></i>
               <span>基础功能</span>
