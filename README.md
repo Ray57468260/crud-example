@@ -8,12 +8,19 @@
 ## 下载项目代码
 
 ``` bash
+cd /data/
 # 记得先安装Git，然后下载代码
 git clone git@github.com:Ray57468260/crud-example.git
+# 备份前端代码
+cp /data/crud-example/appfront/src /tmp/crud-example/appfront/src
 ```
 
 ## 安装Python环境
 ``` bash
+
+# 安装mysql-devel
+yum install -y mysql-devel
+
 # 安装bz2依赖库
 wget https://www.sourceware.org/pub/bzip2/bzip2-latest.tar.gz
 tar -zxf  bzip2-1.0.6.tar.gz 
@@ -27,8 +34,14 @@ make && make install
 pip install virtualenv
 
 # 创建虚拟环境
-# 进入项目根目录
+cd /data/
 virtualenv env -p python3.6 # python3.6指向上面重新编译的版本，换成你的实际路径
+
+# 进入项目根目录
+cd /data/crud-example
+
+# 启动虚拟环境
+. env/bin/activate
 
 # 安装依赖
 pip install -r requirements.txt  -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
@@ -38,9 +51,21 @@ pip install -r requirements.txt  -i https://pypi.tuna.tsinghua.edu.cn/simple --t
 ``` bash
 # 安装node和npm
 
+# 安装vue-cli
+npm install -g @vue/cli
+
+# 创建项目
+cd /data/crud-example
+vue create appfront # 一路回车即可
+
 # 安装vuejs和其他依赖包（进入项目根目录）
 cd appfront/
-npm install
+npm install axios
+npm install element-ui
+npm install vue-router
+
+# 覆盖前端代码
+cp -rf /tmp/crud-example/appfront/src /data/crud-example/appfront/
 ``` 
 
 ## 配置MySQL环境
@@ -62,12 +87,12 @@ CREATE TABLE `app_crudexample` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY
 ## 启动服务
 ``` bash
 # 启动前端服务器，监听端口3000
-cd appfront/
-npm run start
+cd /data/crud-example/appfront/
+npm run serve -- --port 3000 --host 0
 
 # 启动后端服务器，监听端口8000
-cd crud/
-python manager.py runserver 0:8000
+source ~/crud-example/env/bin/activate
+python /root/crud-example/crud/manage.py runserver 0:8000
 
 # 清空防火墙规则（危险操作，仅限测试）
 iptables --flush

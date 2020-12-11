@@ -159,7 +159,7 @@ class CrudView(View):
             elif params['action'] == 'Create':
                 create_form = {}
                 allow_fields = [x.name for x in CrudExample._meta.get_fields() if x.name not in ['id']]
-                for key, value in params.items():
+                for key, value in params['form'].items():
                     if key in allow_fields and value:
                         create_form[key] = value.strip()
                 CrudExample.objects.create(**create_form)
